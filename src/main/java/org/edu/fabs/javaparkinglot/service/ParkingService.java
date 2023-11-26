@@ -8,4 +8,6 @@ public interface ParkingService {
 
     List<Parking> findAll();
 
+    Parking findById(String id);
+
 }
