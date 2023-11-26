@@ -14,9 +14,9 @@ public class SwaggerConfig {
     public OpenAPI apiDetail() {
 
         return new OpenAPI()
-                .info(new Info().title("Rest API")
+                .info(new Info().title("Parking Rest API")
                         .contact(new io.swagger.v3.oas.models.info.Contact().name("Backend Student").email("student@email.com"))
-                        .description("Web API - Parking Lot")
+                        .description("Spring Boot application for Parking Lot")
                         .version("0.0.1")
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation());

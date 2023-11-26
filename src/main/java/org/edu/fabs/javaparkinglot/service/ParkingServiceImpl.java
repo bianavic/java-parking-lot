@@ -1,6 +1,7 @@
 package org.edu.fabs.javaparkinglot.service;
 
 import org.edu.fabs.javaparkinglot.domain.Parking;
+import org.edu.fabs.javaparkinglot.exception.ParkingNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -35,7 +36,11 @@ public class ParkingServiceImpl implements ParkingService {
 
     @Override
     public Parking findById(String id) {
-        return parkingMap.get(id);
+        Parking parking = parkingMap.get(id);
+        if (parking == null) {
+            throw new ParkingNotFoundException(id);
+        }
+        return parking;
     }
 
     @Override
