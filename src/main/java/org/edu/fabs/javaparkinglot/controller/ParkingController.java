@@ -1,5 +1,7 @@
 package org.edu.fabs.javaparkinglot.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.edu.fabs.javaparkinglot.controller.dto.ParkingCreateDTO;
 import org.edu.fabs.javaparkinglot.controller.dto.ParkingDTO;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@Tag(name = "Parking Controller", description = "The parking lot management api")
 @RestController
 @RequestMapping("/parking")
 @RequiredArgsConstructor
@@ -26,6 +29,7 @@ public class ParkingController {
     private final ParkingMapper parkingMapper;
 
     @GetMapping
+    @Operation(summary = "finding all parking's")
     public ResponseEntity<List<ParkingDTO>> findAll() {
         List<Parking> parkingList = parkingService.findAll();
         List<ParkingDTO> result = parkingMapper.toParkingDTOList(parkingList);
@@ -33,6 +37,7 @@ public class ParkingController {
     }
 
     @GetMapping("/{id}")
+    @Operation(summary = "finding a parking by its ID")
     public ResponseEntity<ParkingDTO> findByID(@PathVariable String id) {
         Parking parking = parkingService.findById(id);
         ParkingDTO result = parkingMapper.toParkingDTO(parking);
@@ -40,6 +45,7 @@ public class ParkingController {
     }
 
     @PostMapping
+    @Operation(summary = "create a parking")
     public ResponseEntity<ParkingDTO> create(@RequestBody ParkingCreateDTO dto) {
         var parkingCreate = parkingMapper.toParkingCreate(dto);
         var parking = parkingService.create(parkingCreate);
