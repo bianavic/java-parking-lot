@@ -3,6 +3,7 @@ package org.edu.fabs.javaparkinglot.service;
 import org.edu.fabs.javaparkinglot.domain.Parking;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,8 +18,8 @@ public class ParkingServiceImpl implements ParkingService {
     static {
         var id1 = getUUID();
         var id2 = getUUID();
-        Parking parking1 = new Parking(id1, "BLACK", "VWG-2222", "VW GOL", "MG");
-        Parking parking2 = new Parking(id2, "GREEN", "SUB-1111", "SUBARU VIVIO", "SP");
+        Parking parking1 = new Parking(id1, "VWG-2222", "MG", "VW GOL", "BLACK");
+        Parking parking2 = new Parking(id2, "SUB-1111", "SP", "SUBARU VIVIO", "GREEN");
         parkingMap.put(id1, parking1);
         parkingMap.put(id2, parking2);
     }
@@ -35,6 +36,15 @@ public class ParkingServiceImpl implements ParkingService {
     @Override
     public Parking findById(String id) {
         return parkingMap.get(id);
+    }
+
+    @Override
+    public Parking create(Parking parkingCreate) {
+        String uuid = getUUID();
+        parkingCreate.setId(getUUID());
+        parkingCreate.setEntryDate(LocalDateTime.now());
+        parkingMap.put(uuid, parkingCreate);
+        return parkingCreate;
     }
 
 }

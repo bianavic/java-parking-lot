@@ -10,4 +10,6 @@ public interface ParkingService {
 
     Parking findById(String id);
 
+    Parking create(Parking parkingCreate);
+
 }

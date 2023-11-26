@@ -1,5 +1,6 @@
 package org.edu.fabs.javaparkinglot.controller.mapper;
 
+import org.edu.fabs.javaparkinglot.controller.dto.ParkingCreateDTO;
 import org.edu.fabs.javaparkinglot.controller.dto.ParkingDTO;
 import org.edu.fabs.javaparkinglot.domain.Parking;
 import org.modelmapper.ModelMapper;
@@ -19,6 +20,10 @@ public class ParkingMapper {
 
     public List<ParkingDTO> toParkingDTOList(List<Parking> parkingList) {
         return parkingList.stream().map(this::toParkingDTO).collect(Collectors.toList());
+    }
+
+    public Parking toParkingCreate(ParkingCreateDTO dto) {
+        return MODEL_MAPPER.map(dto, Parking.class);
     }
 
 }

@@ -1,5 +1,6 @@
 package org.edu.fabs.javaparkinglot.controller.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,16 +18,10 @@ public class ParkingDTO {
     private String state;
     private String model;
     private String color;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime entryDate;
+    @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime exitDate;
     private BigDecimal bill;
-
-    public ParkingDTO(String id, String license, String state, String model, String color) {
-        this.id = id;
-        this.license = license;
-        this.state = state;
-        this.model = model;
-        this.color = color;
-    }
 
 }
