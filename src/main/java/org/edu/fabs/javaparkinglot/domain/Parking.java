@@ -1,6 +1,5 @@
 package org.edu.fabs.javaparkinglot.domain;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -27,4 +26,5 @@ public class Parking {
         this.model = model;
         this.color = color;
     }
+
 }
