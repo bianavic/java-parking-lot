@@ -1,14 +1,18 @@
 package org.edu.fabs.javaparkinglot.auth.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -22,7 +26,7 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(nullable = false)
     private String fullName;
@@ -41,9 +45,14 @@ public class User implements UserDetails {
     @Column(name = "updated_at")
     private Date updatedAt;
 
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false)
+    private Role role;
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + role.getName().toString());
+        return List.of(authority);
     }
 
     @Override
@@ -76,11 +85,11 @@ public class User implements UserDetails {
         return true;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public User setId(Integer id) {
+    public User setId(Long id) {
         this.id = id;
         return this;
     }
@@ -123,6 +132,16 @@ public class User implements UserDetails {
 
     public User setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+        return this;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public User setRole(Role role) {
+        this.role = role;
+
         return this;
     }
 
