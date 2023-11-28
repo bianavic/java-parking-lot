@@ -1,55 +1,63 @@
 package org.edu.fabs.javaparkinglot.service;
 
+import lombok.RequiredArgsConstructor;
 import org.edu.fabs.javaparkinglot.domain.Parking;
 import org.edu.fabs.javaparkinglot.exception.ParkingNotFoundException;
+import org.edu.fabs.javaparkinglot.repository.ParkingRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class ParkingServiceImpl implements ParkingService {
 
-    private static Map<String, Parking> parkingMap = new HashMap<>();
-
-    static {
-        var id1 = getUUID();
-        var id2 = getUUID();
-        Parking parking1 = new Parking(id1, "VWG-2222", "MG", "VW GOL", "BLACK");
-        Parking parking2 = new Parking(id2, "SUB-1111", "SP", "SUBARU VIVIO", "GREEN");
-        parkingMap.put(id1, parking1);
-        parkingMap.put(id2, parking2);
-    }
-
-    private static String getUUID() {
-        return UUID.randomUUID().toString().replace("-", "");
-    }
+    private final ParkingRepository parkingRepository;
 
     @Override
     public List<Parking> findAll() {
-        return new ArrayList<>(parkingMap.values());
+        return parkingRepository.findAll();
     }
 
     @Override
     public Parking findById(String id) {
-        Parking parking = parkingMap.get(id);
-        if (parking == null) {
-            throw new ParkingNotFoundException(id);
-        }
-        return parking;
+        return parkingRepository.findById(id).orElseThrow(() -> new ParkingNotFoundException(id));
     }
 
     @Override
     public Parking create(Parking parkingCreate) {
         String uuid = getUUID();
-        parkingCreate.setId(getUUID());
+        parkingCreate.setId(uuid);
         parkingCreate.setEntryDate(LocalDateTime.now());
-        parkingMap.put(uuid, parkingCreate);
+        parkingRepository.save(parkingCreate);
         return parkingCreate;
+    }
+
+    @Override
+    public void delete(String id) {
+        parkingRepository.deleteById(id);
+    }
+
+    @Override
+    public Parking update(String id, Parking parkingCreate) {
+        Parking parkingByID = findById(id);
+        parkingByID.setColor(parkingCreate.getColor());
+        parkingRepository.save(parkingByID);
+        return parkingByID;
+    }
+
+    @Override
+    public Parking checkOut(String id) {
+        Parking parking = findById(id);
+        parking.setExitDate(LocalDateTime.now());
+        parking.setBill(ParkingCheckOut.getBill(parking));
+        return parkingRepository.save(parking);
+    }
+
+    private static String getUUID() {
+        return UUID.randomUUID().toString().replace("-", "");
     }
 
 }

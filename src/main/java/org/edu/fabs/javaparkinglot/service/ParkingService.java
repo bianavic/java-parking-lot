@@ -12,4 +12,10 @@ public interface ParkingService {
 
     Parking create(Parking parkingCreate);
 
+    void delete(String id);
+
+    Parking update(String id, Parking parkingCreate);
+
+    Parking checkOut(String id);
+
 }

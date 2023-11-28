@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,9 +18,9 @@ public class ParkingDTO {
     private String model;
     private String color;
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
-    private LocalDateTime entryDate;
+    private LocalDateTime entryDate = LocalDateTime.now();
     @JsonFormat(pattern = "dd/MM/yyyy HH:mm")
     private LocalDateTime exitDate;
-    private BigDecimal bill;
+    private Double bill;
 
 }
