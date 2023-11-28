@@ -62,18 +62,17 @@ public class ParkingController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}")
-    @Operation(summary = "create a parking")
+    @PutMapping(value = "/{id}")
+    @Operation(summary = "update parking")
     public ResponseEntity<ParkingDTO> update(@PathVariable String id, @RequestBody ParkingCreateDTO dto) {
-        var parkingCreate = parkingMapper.toParkingCreate(dto);
-        var parking = parkingService.update(id, parkingCreate);
-        var result = parkingMapper.toParkingDTO(parking);
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        var parkingUpdate = parkingMapper.toParkingCreate(dto);
+        var parking = parkingService.update(id, parkingUpdate);
+        return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
     }
 
     @PostMapping("/{id}/exit")
+    @Operation(summary = "create exit information")
     public ResponseEntity<ParkingDTO> checkOut(@PathVariable String id) {
-        //TODO verificar se já não esta fechado e lançar exceção
         Parking parking = parkingService.checkOut(id);
         return ResponseEntity.ok(parkingMapper.toParkingDTO(parking));
     }
