@@ -1,5 +1,7 @@
 package org.edu.fabs.javaparkinglot.auth.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.edu.fabs.javaparkinglot.auth.dto.LoginResponse;
 import org.edu.fabs.javaparkinglot.auth.dto.LoginUserDto;
 import org.edu.fabs.javaparkinglot.auth.dto.RegisterUserDto;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/auth")
+@Tag(name = "Authentication", description = "The user registration and authentication API.")
 public class AuthenticationController {
 
     private final JwtService jwtService;
@@ -25,6 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signup")
+    @Operation(summary = "register a new user")
     public ResponseEntity<User> register(@RequestBody RegisterUserDto registerUserDto) {
         User registeredUser = authenticationService.signup(registerUserDto);
 
@@ -32,6 +36,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
+    @Operation(summary = "authenticate the user to get token")
     public ResponseEntity<LoginResponse> authenticate(@RequestBody LoginUserDto loginUserDto) {
         User authenticatedUser = authenticationService.authenticate(loginUserDto);
 

@@ -1,6 +1,7 @@
 package org.edu.fabs.javaparkinglot.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.edu.fabs.javaparkinglot.controller.dto.ParkingCreateDTO;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @Tag(name = "Parking Controller", description = "The parking lot management api")
+@SecurityRequirement(name = "bearerAuth")
 @RestController
 @RequestMapping("/parking")
 @RequiredArgsConstructor
