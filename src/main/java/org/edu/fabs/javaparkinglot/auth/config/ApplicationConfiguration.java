@@ -1,6 +1,7 @@
 package org.edu.fabs.javaparkinglot.auth.config;
 
 import org.edu.fabs.javaparkinglot.auth.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,6 +15,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 public class ApplicationConfiguration {
 
+    @Autowired
     private final UserRepository userRepository;
 
     public ApplicationConfiguration(UserRepository userRepository) {
