@@ -40,7 +40,10 @@ public class AuthenticationService {
         Optional<Role> optionalRole = roleRepository.findByName(RoleEnum.USER);
 
         if (optionalRole.isEmpty()) {
-            return null;
+            Role newRole = new Role();
+            newRole.setName(RoleEnum.USER);
+            newRole.setDescription("Default user role");
+            roleRepository.save(newRole);
         }
 
         var user = new User()
