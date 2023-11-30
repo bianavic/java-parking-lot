@@ -34,7 +34,11 @@ class ParkingControllerTest extends AbstractContainerDatabase {
     @Test
     @DisplayName("should return 200 when get request is find all")
     void findAll() {
-        RestAssured.when()
+        RestAssured
+                .given()
+                .auth()
+                .basic("user", "pwd@123")
+                .when()
                 .get("/parking")
                 .then()
                 .statusCode(HttpStatus.OK.value());
@@ -54,6 +58,8 @@ class ParkingControllerTest extends AbstractContainerDatabase {
 
         RestAssured
                 .given()
+                .auth()
+                .basic("user", "pwd@123")
                     .pathParam("id", parking.getId())
                 .when()
                     .get("parking/{id}")
@@ -71,7 +77,10 @@ class ParkingControllerTest extends AbstractContainerDatabase {
         createDTO.setModel("GOL");
         createDTO.setState("ES");
 
-        RestAssured.given()
+        RestAssured
+                .given()
+                .auth()
+                .basic("user", "pwd@123")
                 .when()
                 .contentType(String.valueOf(MediaType.APPLICATION_JSON))
                 .body(createDTO)
@@ -96,6 +105,8 @@ class ParkingControllerTest extends AbstractContainerDatabase {
 
         RestAssured
                 .given()
+                .auth()
+                .basic("user", "pwd@123")
                 .pathParam("id", parking.getId())
                 .when()
                 .delete("parking/{id}")
@@ -119,6 +130,8 @@ class ParkingControllerTest extends AbstractContainerDatabase {
 
         RestAssured
                 .given()
+                .auth()
+                .basic("user", "pwd@123")
                 .header("Content-type", "application/json")
                 .and()
                 .body(request)
@@ -147,8 +160,10 @@ class ParkingControllerTest extends AbstractContainerDatabase {
         DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
         String formattedExpectedExitDate = dateFormat.format(expectedExitDate);
 
-        RestAssured.given()
+        RestAssured
                 .given()
+                .auth()
+                .basic("user", "pwd@123")
                 .pathParam("id", created.getId())
                 .when()
                 .post("/parking/{id}/exit")
