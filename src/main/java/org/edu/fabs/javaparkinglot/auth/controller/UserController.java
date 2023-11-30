@@ -29,7 +29,7 @@ public class UserController {
 
     @GetMapping("/me")
     @PreAuthorize("isAuthenticated()")
-    @Operation(summary = "return the authenticated user from the JWT token")
+    @Operation(summary = "return the authenticated user")
     public ResponseEntity<User> authenticatedUser() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
